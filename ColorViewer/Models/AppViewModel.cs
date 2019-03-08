@@ -27,7 +27,8 @@ namespace ColorViewer.Models
         {
             get
             {
-                return removeComm ?? (removeComm = new AppCommand(o => {
+                return removeComm ?? (removeComm = new AppCommand(o =>
+                {
                     ColorViewModel curColor = o as ColorViewModel;
                     if (curColor != null)
                         Colors.Remove(curColor);
@@ -60,11 +61,10 @@ namespace ColorViewer.Models
         public AppViewModel()
         {
             Colors = new ObservableCollection<ColorViewModel> {
-                new ColorViewModel(),
-                new ColorViewModel(),
-                new ColorViewModel()
+                new ColorViewModel(255, 255, 0, 0),
+                new ColorViewModel(255, 0, 255, 0),
+                new ColorViewModel(255, 0, 0, 255)
             };
         }
-
     }
 }

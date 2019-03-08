@@ -82,7 +82,12 @@ namespace ColorViewer.Models
 
         public ColorViewModel()
         {
-            color = Color.FromArgb(255,0,0,0);
+            color = Color.FromArgb(255,255,255,255);
+        }
+
+        public ColorViewModel(byte a, byte r, byte g, byte b)
+        {
+            color = Color.FromArgb(a, r, g, b);
         }
     }
 }

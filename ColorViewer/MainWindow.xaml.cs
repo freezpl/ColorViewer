@@ -17,25 +17,13 @@ using System.Windows.Shapes;
 
 namespace ColorViewer
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : MetroWindow
     {
         public MainWindow()
         {
             InitializeComponent();
-
-            AppViewModel app = new AppViewModel();
-
-            this.DataContext = app;
-
-           // var color = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc")); ;
-
-            //MessageBox.Show(color.ToString());
-
-            //col.Background = new SolidColorBrush(app.Colors[0].Color);
-            //MessageBox.Show(col.Background.ToString());
+            this.DataContext = new AppViewModel();
         }
     }
 }

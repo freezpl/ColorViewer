@@ -6,85 +6,85 @@
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:ColorViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel>
-        
-        <StackPanel DataContext="{Binding ActiveColor}">
-            <WrapPanel>
-                <TextBlock Text="Color hex code:" />
-                <TextBox Width="100" MaxLength="9" Text="{Binding Color, UpdateSourceTrigger=LostFocus}"  />
-            </WrapPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+        Title="Color Viewer" Height="550" Width="800" Background="#FFE4E4FF">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+
+            <StackPanel DataContext="{Binding ActiveColor}">
+                <WrapPanel Margin="0 0 0 10">
+                    <TextBlock Style="{StaticResource HexText}"/>
+                    <TextBox Width="100" MaxLength="9" Text="{Binding Color, UpdateSourceTrigger=LostFocus}"  />
+                </WrapPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox IsChecked="{Binding A}"/>
+                    <CheckBox Grid.Row="1" IsChecked="{Binding R}"/>
+                    <CheckBox Grid.Row="2" IsChecked="{Binding G}"/>
+                    <CheckBox Grid.Row="3" IsChecked="{Binding B}"/>
+
+                    <TextBlock Grid.Column="1" Text="Alpha:" Style="{StaticResource ColorName}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="Red:" Style="{StaticResource ColorName}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="Green:" Style="{StaticResource ColorName}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="Blue:" Style="{StaticResource ColorName}"/>
+
+                    <Metro:NumericUpDown  Grid.Column="2" Value="{Binding A}" Maximum="255" Style="{StaticResource NumUpDown}" />
+                    <Metro:NumericUpDown  Grid.Column="2" Grid.Row="1" Value="{Binding R}" Maximum="255" Style="{StaticResource NumUpDown}" />
+                    <Metro:NumericUpDown  Grid.Column="2" Grid.Row="2" Value="{Binding G}" Maximum="255" Style="{StaticResource NumUpDown}" />
+                    <Metro:NumericUpDown  Grid.Column="2" Grid.Row="3" Value="{Binding B}" Maximum="255" Style="{StaticResource NumUpDown}" />
+
+                    <Slider Grid.Column="3" Grid.Row="0" Value="{Binding A}"></Slider>
+                    <Slider Grid.Column="3" Grid.Row="1" Value="{Binding R}"></Slider>
+                    <Slider Grid.Column="3" Grid.Row="2" Value="{Binding G}"></Slider>
+                    <Slider Grid.Column="3" Grid.Row="3" Value="{Binding B}"></Slider>
+                    <Border Grid.Column="4" Grid.RowSpan="4" Name="col">
+                        <Border.Background>
+                            <SolidColorBrush Color="{Binding Color}" />
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <Grid Margin="0 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
-                <CheckBox IsChecked="{Binding A}"/>
-                <CheckBox Grid.Row="1" IsChecked="{Binding R}"/>
-                <CheckBox Grid.Row="2" IsChecked="{Binding G}"/>
-                <CheckBox Grid.Row="3" IsChecked="{Binding B}"/>
-
-                <TextBlock Grid.Column="1" Text="Alpha:" Style="{StaticResource ColorName}"/>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="Red:" Style="{StaticResource ColorName}"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="Green:" Style="{StaticResource ColorName}"/>
-                <TextBlock Grid.Column="1" Grid.Row="3" Text="Blue:" Style="{StaticResource ColorName}"/>
-
-                <Metro:NumericUpDown  Grid.Column="2" Value="{Binding A}" Maximum="255" Style="{StaticResource NumUpDown}" />
-                <Metro:NumericUpDown  Grid.Column="2" Grid.Row="1" Value="{Binding R}" Maximum="255" Style="{StaticResource NumUpDown}" />
-                <Metro:NumericUpDown  Grid.Column="2" Grid.Row="2" Value="{Binding G}" Maximum="255" Style="{StaticResource NumUpDown}" />
-                <Metro:NumericUpDown  Grid.Column="2" Grid.Row="3" Value="{Binding B}" Maximum="255" Style="{StaticResource NumUpDown}" />
-
-                <Slider Grid.Column="3" Grid.Row="0" Value="{Binding A}"></Slider>
-                <Slider Grid.Column="3" Grid.Row="1" Value="{Binding R}"></Slider>
-                <Slider Grid.Column="3" Grid.Row="2" Value="{Binding G}"></Slider>
-                <Slider Grid.Column="3" Grid.Row="3" Value="{Binding B}"></Slider>
-
-                <Border Grid.Column="4" Grid.RowSpan="4" Name="col">
-                    <Border.Background>
-                        <SolidColorBrush Color="{Binding Color}" />
-                    </Border.Background>
-                </Border>
+                <Button Style="{StaticResource AddBtn}"  Command="{Binding AddComm}">
+                    Add Color
+                </Button>
+                <Button Grid.Column="1" Command="{Binding RemoveComm}" CommandParameter="{Binding ActiveColor}"
+                    Style="{StaticResource RemBtn}">
+                    Remove Color
+                </Button>
             </Grid>
+
+            <ListBox ItemsSource="{Binding Colors}" SelectedItem="{Binding ActiveColor}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Style="{StaticResource ColorList}">
+                            <TextBlock Text="{Binding Color}" DockPanel.Dock="Left" Style="{StaticResource ListColorName}"/>
+                            <Border>
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Color}" />
+                                </Border.Background>
+                            </Border>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Command="{Binding AddComm}">
-                Add Color
-            </Button>
-            <Button Grid.Column="1" Command="{Binding RemoveComm}">
-                Remove Color
-            </Button>
-        </Grid>
-
-        <ListBox ItemsSource="{Binding Colors}" SelectedItem="{Binding ActiveColor}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel Style="{StaticResource ColorList}">
-                        <TextBlock Text="assadasd" DockPanel.Dock="Left" />
-                        <TextBlock Text="assadasd" DockPanel.Dock="Right" />
-                        <Border>
-                            <Border.Background>
-                                <SolidColorBrush Color="{Binding Color}" />
-                            </Border.Background>
-                        </Border>
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-    </StackPanel>
+    </ScrollViewer>
 </Metro:MetroWindow>
