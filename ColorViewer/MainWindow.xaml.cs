@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using ColorViewer.Models;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,17 @@ namespace ColorViewer
         public MainWindow()
         {
             InitializeComponent();
+
+            AppViewModel app = new AppViewModel();
+
+            this.DataContext = app;
+
+           // var color = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc")); ;
+
+            //MessageBox.Show(color.ToString());
+
+            //col.Background = new SolidColorBrush(app.Colors[0].Color);
+            //MessageBox.Show(col.Background.ToString());
         }
     }
 }
